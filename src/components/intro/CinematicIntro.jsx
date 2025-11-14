@@ -68,7 +68,7 @@ export default function CinematicIntro({ onComplete }) {
         {currentStage === 'logo' && (
           <motion.div
             key="logo"
-            className="absolute inset-0"
+            className="absolute inset-0 flex items-center justify-center"
             variants={fadeVariants}
             initial="hidden"
             animate="visible"
@@ -82,7 +82,7 @@ export default function CinematicIntro({ onComplete }) {
         {currentStage === 'text' && (
           <motion.div
             key="text"
-            className="absolute inset-0"
+            className="absolute inset-0 flex items-center justify-center"
             variants={fadeVariants}
             initial="hidden"
             animate="visible"
@@ -123,17 +123,6 @@ export default function CinematicIntro({ onComplete }) {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Skip button for development/testing */}
-      <motion.button
-        className="absolute bottom-8 right-8 text-yellow-400 text-sm opacity-50 hover:opacity-100 transition-opacity"
-        onClick={handleNext}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 2 }}
-      >
-        Skip Intro
-      </motion.button>
     </motion.div>
   )
 }

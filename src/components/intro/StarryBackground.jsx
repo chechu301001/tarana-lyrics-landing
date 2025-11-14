@@ -19,20 +19,19 @@ export default function StarryBackground() {
         '#FFE4B5'  // Moccasin
       ]
       
-      for (let i = 0; i < 250; i++) {
+      for (let i = 0; i < 120; i++) {
         starArray.push({
           id: i,
           x: Math.random() * 100, // 0-100% across full width
           y: Math.random() * 100, // 0-100% across full height
-          size: Math.random() * 8 + 3, // Bigger stars: 3-11px
+          size: Math.random() * 1.5 + 0.5, // Tiny dots: 0.5-2px
           color: colors[Math.floor(Math.random() * colors.length)],
-          opacity: Math.random() * 0.8 + 0.3,
+          opacity: Math.random() * 0.5 + 0.2,
           delay: Math.random() * 5,
           duration: Math.random() * 3 + 2 // 2-5 second animations
         })
       }
       setStars(starArray)
-      console.log('Generated stars:', starArray.length) // Debug log
     }
 
     generateStars()

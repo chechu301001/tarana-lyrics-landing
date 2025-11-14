@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion'
+import { generateAllSongsPDF } from '../utils/pdfGenerator'
 
 export default function SongMenu({ songs, onSelectSong, onDownloadAll }) {
+  const handleDownloadAll = async () => {
+    await generateAllSongsPDF(songs)
+  }
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -45,8 +49,8 @@ export default function SongMenu({ songs, onSelectSong, onDownloadAll }) {
   }
 
   return (
-    <div className="fixed inset-0 h-screen flex items-center justify-center">
-      <div className="w-full max-w-2xl mx-auto h-full flex flex-col items-center justify-center px-4">
+    <div className="fixed inset-0 h-screen flex items-center justify-center py-12">
+      <div className="w-full max-w-2xl mx-auto h-full flex flex-col items-center justify-center px-6 md:px-12">
         {/* Menu Title */}
         <motion.div
           className="text-center mb-8 flex-shrink-0"
@@ -109,7 +113,7 @@ export default function SongMenu({ songs, onSelectSong, onDownloadAll }) {
               boxShadow: "0 0 25px rgba(255, 215, 0, 0.4)"
             }}
             whileTap={{ scale: 0.95 }}
-            onClick={onDownloadAll}
+            onClick={handleDownloadAll}
             className="btn-primary text-xl md:text-2xl px-8 py-4"
           >
             Download All Lyrics

@@ -1,3 +1,4 @@
+import React from 'react'
 import { motion } from 'framer-motion'
 
 export default function TextReveal({ onNext }) {
@@ -56,50 +57,54 @@ export default function TextReveal({ onNext }) {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-4 md:p-8">
-      <div className="text-center max-w-6xl mx-auto flex flex-col items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <div className="text-center max-w-6xl flex flex-col items-center justify-center gap-8 md:gap-12">
         {/* Main Title */}
         <motion.h1
-          className="text-5xl md:text-7xl lg:text-9xl xl:text-[12rem] font-bold text-yellow-400 mb-20 leading-tight text-center"
+          className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-yellow-400 leading-tight text-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           {title.split(' ').map((word, index) => (
-            <motion.span
-              key={index}
-              variants={wordVariants}
-              className="inline-block mr-4"
-            >
-              {word}
-            </motion.span>
+            <React.Fragment key={index}>
+              <motion.span
+                variants={wordVariants}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+              {index < title.split(' ').length - 1 && ' '}
+            </React.Fragment>
           ))}
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
-          className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-yellow-200 mb-24 leading-relaxed font-light text-center"
+          className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-yellow-200 leading-relaxed font-light text-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           {subtitle.split(' ').map((word, index) => (
-            <motion.span
-              key={index}
-              variants={{
-                ...wordVariants,
-                visible: {
-                  ...wordVariants.visible,
-                  transition: {
-                    ...wordVariants.visible.transition,
-                    delay: 1.2 + index * 0.1
+            <React.Fragment key={index}>
+              <motion.span
+                variants={{
+                  ...wordVariants,
+                  visible: {
+                    ...wordVariants.visible,
+                    transition: {
+                      ...wordVariants.visible.transition,
+                      delay: 1.2 + index * 0.1
+                    }
                   }
-                }
-              }}
-              className="inline-block mr-3"
-            >
-              {word}
-            </motion.span>
+                }}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+              {index < subtitle.split(' ').length - 1 && ' '}
+            </React.Fragment>
           ))}
         </motion.p>
 
@@ -111,7 +116,7 @@ export default function TextReveal({ onNext }) {
           whileHover="hover"
           whileTap="tap"
           onClick={onNext}
-          className="btn-primary text-xl md:text-2xl xl:text-3xl px-16 py-4"
+          className="btn-primary text-lg md:text-xl xl:text-2xl px-12 py-3 mt-4"
         >
           Enter Experience
         </motion.button>

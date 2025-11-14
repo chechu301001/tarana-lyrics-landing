@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ArrowUp } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { generateSongPDF } from '../utils/pdfGenerator'
 
 export default function SongLyricsView({ song, onBack }) {
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const scrollContainerRef = useRef(null)
+  
+  const handleDownload = async () => {
+    await generateSongPDF(song)
+  }
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,6 +50,29 @@ export default function SongLyricsView({ song, onBack }) {
   // Split lyrics into lines for animation
   const lyricsLines = song.lyrics ? song.lyrics.split('\n') : []
 
+  // Handle scroll detection
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const handleScroll = () => {
+      const scrolled = container.scrollTop > 200
+      setShowScrollTop(scrolled)
+      console.log('Scroll position:', container.scrollTop, 'Show button:', scrolled)
+    }
+
+    container.addEventListener('scroll', handleScroll)
+    return () => container.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    scrollContainerRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className="fixed inset-0 overflow-hidden">
       {/* Header with back button */}
@@ -69,6 +100,7 @@ export default function SongLyricsView({ song, onBack }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleDownload}
             className="btn-primary text-xl md:text-2xl"
           >
             Download
@@ -77,8 +109,11 @@ export default function SongLyricsView({ song, onBack }) {
       </motion.div>
 
       {/* Main content area */}
-      <div className="pt-20 pb-8 px-4 md:px-8 h-full overflow-y-auto">
-        <div className="max-w-4xl mx-auto text-center">
+      <div 
+        ref={scrollContainerRef}
+        className="pt-24 pb-24 px-6 md:px-12 lg:px-16 h-full overflow-y-auto"
+      >
+        <div className="max-w-5xl mx-auto text-center">
           {/* Song Title */}
           <motion.div
             className="text-center mb-16"
@@ -98,7 +133,7 @@ export default function SongLyricsView({ song, onBack }) {
 
           {/* Lyrics */}
           <motion.div
-            className="prose prose-lg md:prose-xl max-w-none"
+            className="prose prose-lg md:prose-xl max-w-none py-8"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -128,9 +163,33 @@ export default function SongLyricsView({ song, onBack }) {
           </motion.div>
 
           {/* Bottom spacing */}
-          <div className="h-32" />
+          <div className="h-40" />
         </div>
       </div>
+
+      {/* Scroll to Top Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: showScrollTop ? 1 : 0,
+          scale: showScrollTop ? 1 : 0.8,
+          y: showScrollTop ? 0 : 20
+        }}
+        transition={{ duration: 0.3 }}
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 btn-primary rounded-full p-5 shadow-2xl"
+        style={{ 
+          pointerEvents: showScrollTop ? 'auto' : 'none',
+          display: showScrollTop ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}
+        whileHover={{ scale: 1.15 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <ArrowUp size={32} strokeWidth={2.5} />
+      </motion.button>
 
       {/* Floating elements */}
       <motion.div

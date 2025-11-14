@@ -17,70 +17,23 @@ export default function LogoShimmer({ stage = 'intro' }) {
           delay: stage === 'intro' ? 0.5 : 0
         }}
       >
-        {/* Shimmer overlay */}
+        {/* Just the logo image - no box, no border, no highlight */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-200 to-transparent opacity-30 -skew-x-12"
-          initial={{ x: '-100%' }}
-          animate={{ x: '200%' }}
+          className="w-64 h-64 md:w-96 md:h-96 relative flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{
-            duration: 2,
-            repeat: Infinity,
-            repeatDelay: 1,
-            ease: "easeInOut"
-          }}
-        />
-        
-        {/* Logo container - with actual logo */}
-        <motion.div
-          className="w-32 h-32 md:w-48 md:h-48 relative overflow-hidden rounded-2xl bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 shadow-2xl flex items-center justify-center"
-          animate={{
-            boxShadow: [
-              "0 0 20px rgba(255, 215, 0, 0.3)",
-              "0 0 40px rgba(255, 215, 0, 0.6)",
-              "0 0 20px rgba(255, 215, 0, 0.3)"
-            ]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
+            duration: 1,
+            ease: "easeOut"
           }}
         >
-          {/* Actual logo image */}
+          {/* Actual logo image - clean and simple */}
           <img 
             src={logoImage} 
             alt="Tarana Logo" 
-            className="w-full h-full object-contain p-2"
-          />
-          
-          {/* Pulsing glow effect */}
-          <motion.div
-            className="absolute inset-0 bg-yellow-300 opacity-20 rounded-2xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            className="w-full h-full object-contain"
           />
         </motion.div>
-
-        {/* Outer glow ring */}
-        <motion.div
-          className="absolute -inset-4 border-2 border-yellow-400 rounded-3xl opacity-50"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
       </motion.div>
     </div>
   )
