@@ -9,17 +9,16 @@ export default function CinematicIntro({ onComplete }) {
   // Stages: 'loading' -> 'logo' -> 'text' -> 'transitioning'
 
   useEffect(() => {
-    // Automatically progress through stages
-    const timer1 = setTimeout(() => {
-      setCurrentStage('logo')
-    }, 1000) // Show stars for 1 second
+    // // Automatically progress through stages
+    // const timer1 = setTimeout(() => {
+    //   setCurrentStage('logo')
+    // }, 1000) // Show stars for 1 second
 
     const timer2 = setTimeout(() => {
       setCurrentStage('text')
-    }, 3500) // Show logo for 2.5 seconds
+    }, 500) // Show logo for 2.5 seconds
 
     return () => {
-      clearTimeout(timer1)
       clearTimeout(timer2)
     }
   }, [])
