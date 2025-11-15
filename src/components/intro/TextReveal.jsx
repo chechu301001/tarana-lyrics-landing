@@ -57,8 +57,8 @@ export default function TextReveal({ onNext }) {
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <div className="text-center max-w-6xl flex flex-col items-center justify-center gap-8 md:gap-12">
+    <div className="w-full h-full min-h-screen flex items-center justify-center p-4 md:p-8">
+      <div className="text-center max-w-6xl w-full flex flex-col items-center justify-center gap-6 md:gap-10">
         {/* Main Title */}
         <motion.h1
           className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-yellow-400 leading-tight text-center"

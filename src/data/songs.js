@@ -3,7 +3,7 @@ const songs = [
     id: 'song-1',
     title: 'MANOVEGA',
     context: 'The beginning',
-    highlightLines: [],
+    highlightLines: [ ],
     lyrics: `Dherena Tarana dheem
 Dherena thom na na dheem\n
 Dherena Tarana dheem\n
@@ -83,6 +83,8 @@ Isaiyenum magavume inbamaai jananam\n
 Idhu manadai thalaattum\n
 maayame\n
 \n
+Re Pa Re ma Ga Re Sa X4\n\n
+
 Ennil unnai serthen ilamayum vellume\n
 Kannil vazhiyum jeevan kadhaigalum sollume\n
 \n
@@ -142,6 +144,7 @@ Marada aa neralalli badukina hannina nemmadiya sihiyannu savide\n
 Manasina goodalli gidavondu maravaagi \n
 Aa marada neralalli Naa ninthe\n
 Marada aa neralalli badukina hannina nemmadiya sihiyannu savide\n
+Crowd: Oohs
 Kaledhode.\n
 \n
 Theli theli baanadaariyalli jaaride\n
@@ -152,7 +155,7 @@ Theli theli baanadaariyalli jaaride\n
     title: 'AANDHI',
     context: 'Control the darkness within',
     highlightLines: [],
-    lyrics: `Dekho kitne alag se hai tere rastee\n
+    lyrics: `Hu..Ha, Hu..Ha\nDekho kitne alag se hai tere rastee\n
 Kya sab paana zaruri hai Tere vaste...\n
 In raahon me ab hum tum\n
 Bas khoye hai kahin\n
@@ -265,7 +268,7 @@ ya bharam mera - samjhaa do\n
 \n
 Bhulaake teri har yaadein  \n
 Chal raha hoon aakhir \n
-(main) tere bina zinda hoon..\n
+tere bina zinda hoon..\n
 taqdeer yeh kya phir\n
 \n
 Khwahishon ki dhadkan par\n

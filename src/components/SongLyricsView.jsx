@@ -49,6 +49,21 @@ export default function SongLyricsView({ song, onBack }) {
 
   // Split lyrics into lines for animation
   const lyricsLines = song.lyrics ? song.lyrics.split('\n') : []
+  
+  // Debug logging - check line numbers and highlighting
+  useEffect(() => {
+    if (song.highlightLines && song.highlightLines.length > 0) {
+      console.log('=== SONG DEBUG ===')
+      console.log('Song:', song.title)
+      console.log('Highlight lines array:', song.highlightLines)
+      console.log('Total lines after split:', lyricsLines.length)
+      console.log('Lines to highlight:')
+      song.highlightLines.forEach(lineNum => {
+        const line = lyricsLines[lineNum - 1]
+        console.log(`  Line ${lineNum}: "${line}"`)
+      })
+    }
+  }, [song, lyricsLines])
 
   // Handle scroll detection
   useEffect(() => {
@@ -129,6 +144,20 @@ export default function SongLyricsView({ song, onBack }) {
                 by {song.artist}
               </p>
             )}
+            
+            {/* Disclaimer for highlighted lines */}
+            {song.highlightLines && song.highlightLines.length > 0 && (
+              <motion.div
+                className="mt-8 mx-auto max-w-2xl"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                <p className="text-lg md:text-xl text-yellow-300 bg-yellow-400 bg-opacity-10 rounded-full px-6 py-3 inline-block border border-yellow-400 border-opacity-30">
+                  ✨ Highlighted lines are where you can sing along! ✨
+                </p>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Lyrics */}
@@ -138,28 +167,49 @@ export default function SongLyricsView({ song, onBack }) {
             initial="hidden"
             animate="visible"
           >
-            {lyricsLines.map((line, index) => (
-              <motion.div
-                key={index}
-                variants={lineVariants}
-                className={`
-                  text-center mb-8 
-                  ${line.trim() === '' ? 'mb-16' : ''}
-                  ${line.startsWith('[') && line.endsWith(']') 
-                    ? 'text-yellow-300 text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-12' 
-                    : 'text-yellow-100 text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-relaxed'
-                  }
-                `}
-              >
-                {line.trim() === '' ? (
-                  <div className="h-4" />
-                ) : (
-                  <span className="inline-block">
-                    {line}
-                  </span>
-                )}
-              </motion.div>
-            ))}
+            {lyricsLines.map((line, index) => {
+              // Check if this line should be highlighted (index is 0-based, highlightLines is 1-based)
+              const isHighlighted = song.highlightLines && song.highlightLines.includes(index + 1)
+              
+              // Debug log for highlighted lines
+              if (isHighlighted) {
+                console.log(`Line ${index + 1} is highlighted:`, line)
+              }
+              
+              return (
+                <motion.div
+                  key={index}
+                  variants={lineVariants}
+                  className={`
+                    text-center mb-8 
+                    ${line.trim() === '' ? 'mb-16' : ''}
+                    ${line.startsWith('[') && line.endsWith(']') 
+                      ? 'text-yellow-300 text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-12' 
+                      : 'text-yellow-100 text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-relaxed'
+                    }
+                    ${isHighlighted ? 'relative' : ''}
+                  `}
+                >
+                  {line.trim() === '' ? (
+                    <div className="h-4" />
+                  ) : (
+                    <span 
+                      className={`inline-block transition-all duration-300 ${
+                        isHighlighted 
+                          ? 'bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 text-white px-8 py-4 rounded-2xl border-2 border-cyan-300 shadow-2xl shadow-cyan-400/50 font-bold transform hover:scale-105' 
+                          : ''
+                      }`}
+                      style={isHighlighted ? {
+                        textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
+                        animation: 'pulse-glow 2s ease-in-out infinite'
+                      } : {}}
+                    >
+                      {line}
+                    </span>
+                  )}
+                </motion.div>
+              )
+            })}
           </motion.div>
 
           {/* Bottom spacing */}

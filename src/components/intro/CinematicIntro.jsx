@@ -59,9 +59,6 @@ export default function CinematicIntro({ onComplete }) {
             exit="exit"
             transition={{ duration: 0.8 }}
           >
-            <div className="text-yellow-400 text-xl font-semibold">
-              Loading...
-            </div>
           </motion.div>
         )}
 
